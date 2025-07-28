@@ -38,17 +38,7 @@ public class SecurityConfig {
                         .csrf(AbstractHttpConfigurer::disable)
                         .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                         .authorizeHttpRequests(auth -> auth
-                                //public
                                 .requestMatchers("/authentication/**").permitAll()
-                                //user
-                                .requestMatchers(HttpMethod.GET, "/profile/**").hasRole("USER") //TODO cambiar todos los endpoints correctos abajo
-                                .requestMatchers(HttpMethod.POST, "/user/upload").hasRole("USER")
-                                //admin
-                                .requestMatchers(HttpMethod.POST, "/admin/create-user").hasRole("ADMIN")
-                                .requestMatchers(HttpMethod.DELETE, "/admin/delete-user/**").hasRole("ADMIN")
-                                //shared
-                                .requestMatchers(HttpMethod.GET, "/dashboard").hasAnyRole("USER", "ADMIN")
-                                //default
                                 .anyRequest().authenticated()
                         )
                         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
